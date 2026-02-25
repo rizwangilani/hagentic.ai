@@ -1,0 +1,422 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Hagentic — Where Humans and Agents Build Together</title>
+<meta name="description" content="Hagentic is the platform where humans and AI agents collaborate to build products. Coming soon.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=General+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --coral: #FF6B4A;
+    --electric-blue: #4A6AFF;
+    --mint: #3DFFC2;
+    --violet: #A855F7;
+    --sunflower: #FFCB47;
+    --midnight: #0A0A1A;
+    --off-white: #F5F2EB;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    background: var(--midnight);
+    color: var(--off-white);
+    font-family: 'General Sans', -apple-system, sans-serif;
+    min-height: 100vh;
+    overflow-x: hidden;
+    position: relative;
+  }
+
+  /* Grain overlay */
+  body::after {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.04'/%3E%3C/svg%3E");
+    pointer-events: none;
+    z-index: 1000;
+  }
+
+  /* Animated gradient blobs */
+  .blob {
+    position: fixed;
+    border-radius: 50%;
+    filter: blur(80px);
+    opacity: 0.5;
+    animation: drift 20s ease-in-out infinite alternate;
+    will-change: transform;
+  }
+
+  .blob-1 {
+    width: 500px; height: 500px;
+    background: radial-gradient(circle, var(--coral) 0%, transparent 70%);
+    top: -10%; left: -5%;
+    animation-duration: 18s;
+  }
+
+  .blob-2 {
+    width: 600px; height: 600px;
+    background: radial-gradient(circle, var(--electric-blue) 0%, transparent 70%);
+    top: 30%; right: -10%;
+    animation-duration: 22s;
+    animation-delay: -5s;
+  }
+
+  .blob-3 {
+    width: 400px; height: 400px;
+    background: radial-gradient(circle, var(--mint) 0%, transparent 70%);
+    bottom: -5%; left: 30%;
+    animation-duration: 16s;
+    animation-delay: -10s;
+  }
+
+  .blob-4 {
+    width: 350px; height: 350px;
+    background: radial-gradient(circle, var(--violet) 0%, transparent 70%);
+    top: 60%; left: -5%;
+    animation-duration: 24s;
+    animation-delay: -8s;
+  }
+
+  @keyframes drift {
+    0%   { transform: translate(0, 0) scale(1); }
+    25%  { transform: translate(60px, -40px) scale(1.1); }
+    50%  { transform: translate(-30px, 60px) scale(0.95); }
+    75%  { transform: translate(40px, 20px) scale(1.05); }
+    100% { transform: translate(-50px, -30px) scale(1); }
+  }
+
+  /* Layout */
+  .container {
+    position: relative;
+    z-index: 10;
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 0 32px;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+  }
+
+  /* Badge */
+  .badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 8px 18px;
+    border: 1px solid rgba(255,255,255,0.12);
+    border-radius: 100px;
+    font-size: 13px;
+    font-weight: 500;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+    color: rgba(255,255,255,0.7);
+    backdrop-filter: blur(12px);
+    background: rgba(255,255,255,0.04);
+    margin-bottom: 48px;
+    animation: fadeUp 0.8s ease-out both;
+    animation-delay: 0.2s;
+  }
+
+  .badge-dot {
+    width: 6px; height: 6px;
+    border-radius: 50%;
+    background: var(--mint);
+    box-shadow: 0 0 12px var(--mint);
+    animation: pulse-dot 2s ease-in-out infinite;
+  }
+
+  @keyframes pulse-dot {
+    0%, 100% { opacity: 1; transform: scale(1); }
+    50% { opacity: 0.5; transform: scale(0.8); }
+  }
+
+  /* Logo / Name */
+  .logo {
+    font-family: 'Syne', sans-serif;
+    font-weight: 800;
+    font-size: clamp(64px, 12vw, 140px);
+    line-height: 0.95;
+    letter-spacing: -0.03em;
+    margin-bottom: 32px;
+    animation: fadeUp 0.8s ease-out both;
+    animation-delay: 0.4s;
+    background: linear-gradient(
+      135deg,
+      var(--off-white) 0%,
+      var(--coral) 25%,
+      var(--sunflower) 50%,
+      var(--mint) 75%,
+      var(--electric-blue) 100%
+    );
+    background-size: 300% 300%;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    animation: fadeUp 0.8s ease-out both, gradient-shift 8s ease-in-out infinite;
+    animation-delay: 0.4s, 0s;
+  }
+
+  @keyframes gradient-shift {
+    0%, 100% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+  }
+
+  /* Tagline */
+  .tagline {
+    font-family: 'General Sans', sans-serif;
+    font-size: clamp(18px, 3vw, 26px);
+    font-weight: 400;
+    line-height: 1.5;
+    color: rgba(255,255,255,0.6);
+    max-width: 560px;
+    margin-bottom: 56px;
+    animation: fadeUp 0.8s ease-out both;
+    animation-delay: 0.6s;
+  }
+
+  .tagline strong {
+    color: var(--off-white);
+    font-weight: 600;
+  }
+
+  /* Email form */
+  .form-wrapper {
+    animation: fadeUp 0.8s ease-out both;
+    animation-delay: 0.8s;
+    width: 100%;
+    max-width: 480px;
+  }
+
+  .email-form {
+    display: flex;
+    gap: 0;
+    border-radius: 16px;
+    overflow: hidden;
+    border: 1px solid rgba(255,255,255,0.1);
+    background: rgba(255,255,255,0.05);
+    backdrop-filter: blur(20px);
+    transition: border-color 0.3s, box-shadow 0.3s;
+  }
+
+  .email-form:focus-within {
+    border-color: var(--coral);
+    box-shadow: 0 0 0 4px rgba(255,107,74,0.15), 0 8px 32px rgba(0,0,0,0.3);
+  }
+
+  .email-input {
+    flex: 1;
+    padding: 18px 24px;
+    background: transparent;
+    border: none;
+    outline: none;
+    color: var(--off-white);
+    font-family: 'General Sans', sans-serif;
+    font-size: 16px;
+    font-weight: 400;
+  }
+
+  .email-input::placeholder {
+    color: rgba(255,255,255,0.3);
+  }
+
+  .submit-btn {
+    padding: 18px 32px;
+    background: linear-gradient(135deg, var(--coral), #FF8A4A);
+    color: var(--midnight);
+    border: none;
+    font-family: 'Syne', sans-serif;
+    font-weight: 700;
+    font-size: 15px;
+    letter-spacing: 0.02em;
+    cursor: pointer;
+    transition: all 0.3s;
+    white-space: nowrap;
+  }
+
+  .submit-btn:hover {
+    background: linear-gradient(135deg, #FF8A4A, var(--sunflower));
+    transform: scale(1.02);
+  }
+
+  .submit-btn:active {
+    transform: scale(0.98);
+  }
+
+  /* Success state */
+  .success-msg {
+    display: none;
+    padding: 18px 24px;
+    background: rgba(61,255,194,0.08);
+    border: 1px solid rgba(61,255,194,0.2);
+    border-radius: 16px;
+    color: var(--mint);
+    font-size: 15px;
+    font-weight: 500;
+    text-align: center;
+  }
+
+  .success-msg.show {
+    display: block;
+    animation: fadeUp 0.5s ease-out;
+  }
+
+  /* Concept words */
+  .concept-row {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 12px;
+    margin-top: 64px;
+    animation: fadeUp 0.8s ease-out both;
+    animation-delay: 1s;
+  }
+
+  .concept-pill {
+    padding: 8px 18px;
+    border-radius: 100px;
+    font-size: 13px;
+    font-weight: 600;
+    font-family: 'Syne', sans-serif;
+    letter-spacing: 0.03em;
+    text-transform: uppercase;
+    border: 1px solid;
+  }
+
+  .pill-1 { color: var(--coral); border-color: rgba(255,107,74,0.3); background: rgba(255,107,74,0.06); }
+  .pill-2 { color: var(--mint); border-color: rgba(61,255,194,0.3); background: rgba(61,255,194,0.06); }
+  .pill-3 { color: var(--sunflower); border-color: rgba(255,203,71,0.3); background: rgba(255,203,71,0.06); }
+  .pill-4 { color: var(--electric-blue); border-color: rgba(74,106,255,0.3); background: rgba(74,106,255,0.06); }
+  .pill-5 { color: var(--violet); border-color: rgba(168,85,247,0.3); background: rgba(168,85,247,0.06); }
+
+  /* Bottom line */
+  .footer {
+    position: absolute;
+    bottom: 32px;
+    left: 50%;
+    transform: translateX(-50%);
+    font-size: 13px;
+    color: rgba(255,255,255,0.25);
+    letter-spacing: 0.04em;
+    animation: fadeUp 0.8s ease-out both;
+    animation-delay: 1.2s;
+    z-index: 10;
+    white-space: nowrap;
+  }
+
+  /* Animations */
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(24px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+
+  /* Mobile */
+  @media (max-width: 600px) {
+    .container { padding: 0 20px; }
+
+    .email-form {
+      flex-direction: column;
+      border-radius: 14px;
+    }
+
+    .email-input {
+      padding: 16px 20px;
+      text-align: center;
+    }
+
+    .submit-btn {
+      padding: 16px 24px;
+    }
+
+    .concept-row { gap: 8px; }
+
+    .concept-pill {
+      font-size: 11px;
+      padding: 6px 14px;
+    }
+
+    .badge { font-size: 11px; margin-bottom: 36px; }
+    .tagline { margin-bottom: 40px; }
+    .concept-row { margin-top: 48px; }
+    .footer { font-size: 11px; bottom: 24px; }
+  }
+</style>
+</head>
+<body>
+
+  <!-- Background blobs -->
+  <div class="blob blob-1"></div>
+  <div class="blob blob-2"></div>
+  <div class="blob blob-3"></div>
+  <div class="blob blob-4"></div>
+
+  <div class="container">
+
+    <div class="badge">
+      <span class="badge-dot"></span>
+      Coming Soon
+    </div>
+
+    <h1 class="logo">hagentic</h1>
+
+    <p class="tagline">
+      Where <strong>humans</strong> and <strong>AI agents</strong> build products together.
+    </p>
+
+    <div class="form-wrapper">
+      <form class="email-form" id="waitlist-form">
+        <input
+          type="email"
+          class="email-input"
+          placeholder="your@email.com"
+          required
+          autocomplete="email"
+        >
+        <button type="submit" class="submit-btn">Get Early Access</button>
+      </form>
+      <div class="success-msg" id="success-msg">
+        You're on the list ✦ We'll be in touch soon.
+      </div>
+    </div>
+
+    <div class="concept-row">
+      <span class="concept-pill pill-1">Orchestrate</span>
+      <span class="concept-pill pill-2">Collaborate</span>
+      <span class="concept-pill pill-3">Ship</span>
+      <span class="concept-pill pill-4">Human + Agent</span>
+      <span class="concept-pill pill-5">Build Faster</span>
+    </div>
+
+  </div>
+
+  <div class="footer">© 2026 Hagentic</div>
+
+  <script>
+    document.getElementById('waitlist-form').addEventListener('submit', function(e) {
+      e.preventDefault();
+      const form = this;
+      const input = form.querySelector('.email-input');
+      const email = input.value;
+
+      // Replace this with your actual form endpoint (Formspree, ConvertKit, etc.)
+      // For now, just show success
+      form.style.display = 'none';
+      document.getElementById('success-msg').classList.add('show');
+
+      // Example: send to Formspree (replace YOUR_FORM_ID)
+      // fetch('https://formspree.io/f/YOUR_FORM_ID', {
+      //   method: 'POST',
+      //   headers: { 'Content-Type': 'application/json' },
+      //   body: JSON.stringify({ email: email })
+      // });
+    });
+  </script>
+
+</body>
+</html>
