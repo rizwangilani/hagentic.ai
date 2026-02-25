@@ -145,8 +145,6 @@
     line-height: 0.95;
     letter-spacing: -0.03em;
     margin-bottom: 32px;
-    animation: fadeUp 0.8s ease-out both;
-    animation-delay: 0.4s;
     background: linear-gradient(
       135deg,
       var(--off-white) 0%,
@@ -401,20 +399,24 @@
     document.getElementById('waitlist-form').addEventListener('submit', function(e) {
       e.preventDefault();
       const form = this;
-      const input = form.querySelector('.email-input');
-      const email = input.value;
+      const email = form.querySelector('.email-input').value;
 
-      // Replace this with your actual form endpoint (Formspree, ConvertKit, etc.)
-      // For now, just show success
-      form.style.display = 'none';
-      document.getElementById('success-msg').classList.add('show');
-
-      // Example: send to Formspree (replace YOUR_FORM_ID)
-      // fetch('https://formspree.io/f/YOUR_FORM_ID', {
-      //   method: 'POST',
-      //   headers: { 'Content-Type': 'application/json' },
-      //   body: JSON.stringify({ email: email })
-      // });
+      fetch('https://formsubmit.co/ajax/hello@hagentic.ai', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'Accept': 'application/json'
+        },
+        body: JSON.stringify({ email: email })
+      }).then(response => response.json())
+        .then(data => {
+          form.style.display = 'none';
+          document.getElementById('success-msg').classList.add('show');
+        })
+        .catch(error => {
+          form.style.display = 'none';
+          document.getElementById('success-msg').classList.add('show');
+        });
     });
   </script>
 
